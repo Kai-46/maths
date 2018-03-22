@@ -1,0 +1,42 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\title{Conditional Independence in Bayesian Network}
+\author{Kai Zhang \\
+\href{mailto:kz298@cornell.edu}{kz298@cornell.edu}
+}
+\date{\today}                                           % Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+A Bayesian network is a DAG $G=(V, E)$. Suppose a subset $S\subset V, |\bar{S}|\geq 2$ is observed, our problem is that  for any given $v_1,v_2\in \bar{S},v_1\neq v_2$, check if $v_1\perp v_2\mid S$ holds.
+
+\section*{Solution}
+First we define a subgraph graph $G_{\bar{S}}\subset G$ consisting of vertices in $\bar{S}$. Then we define 5 sets of vertices as below.
+\begin{align*}
+&\Phi_1=\big\{v\in \bar{S}: v_1\rightsquigarrow v\text{ in } G_{\bar{S}}\big\}\\
+&\Phi_2=\big\{v\in \bar{S}: v_2\rightsquigarrow v\text{ in } G_{\bar{S}}\big\} \\
+&\Phi_3=\big\{v\in \bar{S}: v\rightsquigarrow v_1\text{ in } G_{\bar{S}}\big\}\\
+&\Phi_4=\big\{v\in \bar{S}: v\rightsquigarrow v_2\text{ in } G_{\bar{S}}\big\}\\
+&\Phi_5=\big\{v\in \bar{S}: \exists v'\in S, v\rightsquigarrow v'\text{ in } G\big\}\cup S
+\end{align*}
+, where '$v_1\rightsquigarrow v \text{ in } G_{\bar{S}}$' means there exists a path from $v_1$ to $v$ in $G_{\bar{S}}$; same rule applies to the others.
+
+Then we conclude that $v_1\perp v_2\mid S$  i.f.f. all the following three conditions hold.
+\begin{itemize}
+\item[1)] $v_2\notin \Phi_1 $ and $v_1\notin \Phi_2$
+\item[2)] $\Phi_3\cap \Phi_4=\phi$
+\item[3)] either $v_1$ or $v_2$ is disconnected with $\Phi_5$ in $G$
+\end{itemize}
+
+The correctness of the above solution is actually quite straightforward. The only thing we should focus on is that we should regard $S$ as a multi-dimensional random variable so that we don't need to worry about the structure inside $S$.
+
+\end{document} 
